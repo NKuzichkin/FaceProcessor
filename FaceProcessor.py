@@ -28,6 +28,7 @@ def get_model(ctx, model):
     model.set_params(arg_params, aux_params)
     return model
 
+model=None
 def init():
     for i in range(4):
         mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-0001.params'.format(i+1))
