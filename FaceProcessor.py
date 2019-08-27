@@ -38,8 +38,10 @@ def init():
     # Determine and set context
     if len(mx.test_utils.list_gpus())==0:
         ctx = mx.cpu()
+        print('use CPU')
     else:
         ctx = mx.gpu(0)
+        print('use GPU')
     # Download onnx model
     mx.test_utils.download('https://s3.amazonaws.com/onnx-model-zoo/arcface/resnet100.onnx')
     # Path to ONNX model
