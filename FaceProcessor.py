@@ -55,7 +55,7 @@ def get_feature(model,input_blob):
     db = mx.io.DataBatch(data=(data,))
     model.forward(db, is_train=False)
     modelOutputs = model.get_outputs()[0];
-    embeddings =modelOutputs.asnumpy()
+    embeddings =modelOutputs.asnumpy().tolist()
     i=0
     while i < len(embeddings):
         embeddings[i]=sklearn.preprocessing.normalize([embeddings[i]]).flatten().tolist()
