@@ -28,16 +28,24 @@ def get_model(ctx, model):
     model.set_params(arg_params, aux_params)
     return model
 
-for i in range(4):
-    mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-0001.params'.format(i+1))
-    mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-symbol.json'.format(i+1))
-    mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}.caffemodel'.format(i+1))
-    mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}.prototxt'.format(i+1))
-# Determine and set context
-if len(mx.test_utils.list_gpus())==0:
-    ctx = mx.cpu()
-else:
-    ctx = mx.gpu(0)
+def init():
+    for i in range(4):
+        mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-0001.params'.format(i+1))
+        mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-symbol.json'.format(i+1))
+        mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}.caffemodel'.format(i+1))
+        mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}.prototxt'.format(i+1))
+    # Determine and set context
+    if len(mx.test_utils.list_gpus())==0:
+        ctx = mx.cpu()
+    else:
+        ctx = mx.gpu(0)
+
+    # Download onnx model
+    mx.test_utils.download('https://s3.amazonaws.com/onnx-model-zoo/arcface/resnet100.onnx')
+    # Path to ONNX model
+    model_name = 'resnet100.onnx'
+    # Load ONNX model
+    model = get_model(ctx , model_name)
 
 def get_feature(model,input_blob): 
     (count,channels,h,w)=input_blob.shape
@@ -52,17 +60,6 @@ def get_feature(model,input_blob):
         i =i+1
    
     return embeddings
-
-# Download onnx model
-mx.test_utils.download('https://s3.amazonaws.com/onnx-model-zoo/arcface/resnet100.onnx')
-# Path to ONNX model
-model_name = 'resnet100.onnx'
-# Load ONNX model
-model = get_model(ctx , model_name)
-
-
-
-
 
 def getFaceAligment (url):
     inputBlob=np.empty((0, 3, 112, 112))
@@ -137,7 +134,6 @@ def getFaceAligment (url):
       
     return inputBlob
     return inputBlob
-
 
 
 def getFaceFeatures(url):
