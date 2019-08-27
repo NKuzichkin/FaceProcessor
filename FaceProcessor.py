@@ -28,7 +28,7 @@ def get_model(ctx, model):
     model.set_params(arg_params, aux_params)
     return model
 
-model=None
+
 def init():
     for i in range(4):
         mx.test_utils.download(dirname='mtcnn-model', url='https://s3.amazonaws.com/onnx-model-zoo/arcface/mtcnn-model/det{}-0001.params'.format(i+1))
@@ -40,11 +40,13 @@ def init():
         ctx = mx.cpu()
     else:
         ctx = mx.gpu(0)
-
     # Download onnx model
     mx.test_utils.download('https://s3.amazonaws.com/onnx-model-zoo/arcface/resnet100.onnx')
     # Path to ONNX model
     model_name = 'resnet100.onnx'
+    # Load ONNX model
+    model = get_model(ctx , model_name)
+    return model_name
     
 
 def get_feature(model,input_blob): 
@@ -137,11 +139,8 @@ def getFaceAligment (url):
 
 def getFaceFeatures(url):
     faces=getFaceAligment(url)
-    # Load ONNX model
-    model = get_model(ctx , model_name)
+    model=init()
     featuresOut=get_feature(model, faces)
-
-
     resultus = {'url':urlIn,
         'features':featuresOut}
     jsonStr=json.dumps(resultus)
