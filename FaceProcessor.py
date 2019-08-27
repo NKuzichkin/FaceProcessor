@@ -61,7 +61,7 @@ def get_feature(model,input_blob):
         embeddings[i]=sklearn.preprocessing.normalize([embeddings[i]]).flatten().tolist()
         i =i+1
    
-    return embeddings
+    return embeddings.tolist()
 
 def getFaceAligment (url):
     inputBlob=np.empty((0, 3, 112, 112))
