@@ -141,7 +141,7 @@ def getFaceFeatures(url):
     faces=getFaceAligment(url)
     model=init()
     featuresOut=get_feature(model, faces)
-    resultus = {'url':urlIn,
+    resultus = {'url':url,
         'features':featuresOut}
     jsonStr=json.dumps(resultus)
     print(jsonStr)
