@@ -58,7 +58,7 @@ def get_feature(model,input_blob):
     embeddings =modelOutputs.asnumpy()
     i=0
     while i < len(embeddings):
-        embeddings[i]=sklearn.preprocessing.normalize([embeddings[i]]).flatten()
+        embeddings[i]=sklearn.preprocessing.normalize([embeddings[i]]).flatten().tolist()
         i =i+1
    
     return embeddings
