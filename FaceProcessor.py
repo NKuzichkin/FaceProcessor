@@ -46,7 +46,7 @@ def init():
     model_name = 'resnet100.onnx'
     # Load ONNX model
     model = get_model(ctx , model_name)
-    return model_name
+    return model
     
 
 def get_feature(model,input_blob): 
