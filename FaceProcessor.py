@@ -143,5 +143,6 @@ def getFaceFeatures(url):
     featuresOut=get_feature(model, faces)
     resultus = {'url':url,
         'features':featuresOut}
-    jsonStr=json.dumps(resultus)
-    print(jsonStr)
+    #jsonStr=json.dumps(resultus)
+    #print(jsonStr)
+    return resultus
