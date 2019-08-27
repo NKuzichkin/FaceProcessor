@@ -72,7 +72,6 @@ def getFaceAligment (url):
     detector = MTCNN()
     result = detector.detect_faces(img)
     i=0
-    print(result)
     outEmb =[]
     for resus in result:
       if resus['confidence'] <0.7:
@@ -122,7 +121,6 @@ def getFaceAligment (url):
               angile=180+math.degrees(math.asin(dX/-dY))+90
       else:
               angile=math.degrees(math.asin(dY/dX))
-      print(angile)
       crop_img=rotateImage(crop_img,angile)  
       
       resizeS=int(112*1.3)
