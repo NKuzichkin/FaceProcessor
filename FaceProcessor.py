@@ -45,8 +45,7 @@ def init():
     mx.test_utils.download('https://s3.amazonaws.com/onnx-model-zoo/arcface/resnet100.onnx')
     # Path to ONNX model
     model_name = 'resnet100.onnx'
-    # Load ONNX model
-    model = get_model(ctx , model_name)
+    
 
 def get_feature(model,input_blob): 
     (count,channels,h,w)=input_blob.shape
@@ -134,11 +133,12 @@ def getFaceAligment (url):
       inputBlob = np.append(inputBlob,[crop_img],axis=0)
       
     return inputBlob
-    return inputBlob
 
 
 def getFaceFeatures(url):
     faces=getFaceAligment(url)
+    # Load ONNX model
+    model = get_model(ctx , model_name)
     featuresOut=get_feature(model, faces)
 
 
